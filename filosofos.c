@@ -22,24 +22,24 @@ char *space[] = {"", "\t", "\t\t", "\t\t\t", "\t\t\t\t" } ;
 
 // filósofo comendo
 void come (int f){
-  printf ("%sCOMENDO\n", space[f]) ;
+  //printf ("%sCOMENDO\n", space[f]) ;
 }
 
 // filósofo meditando
 void medita (int f){
-  printf ("%smeditando\n", space[f]) ;
+  //printf ("%smeditando\n", space[f]) ;
 }
 
 // pega o palito
 void pega_palito (int f, int h){
-  printf ("%squer h%d\n", space[f], h) ;
+  //printf ("%squer h%d\n", space[f], h) ;
   sem_wait (&palito [h]) ;
-  printf ("%spegou h%d\n", space[f], h) ;
+  //printf ("%spegou h%d\n", space[f], h) ;
 }
 
 // larga o palito
 void larga_palito (int f, int h){
-  printf ("%slarga h%d\n", space[f], h) ;
+  //printf ("%slarga h%d\n", space[f], h) ;
   sem_post (&palito [h]) ;
 }
 
