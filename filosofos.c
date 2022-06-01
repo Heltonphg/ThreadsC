@@ -14,8 +14,8 @@ gcc -Wall filosofos.c -o filosofos -lpthread
 #define NUMFILO 5
 #define NUM_OF_ROUNDS 10000 //Filósofo irá comer por 10000 rodadas
 
-pthread_t filosofo [NUMFILO] ;	// threads filósofos
-sem_t     palito    [NUMFILO] ;	// um semaforo para cada palito (iniciam em 1)
+pthread_t filosofo [NUMFILO] ;  // threads filósofos
+sem_t     palito    [NUMFILO] ; // um semaforo para cada palito (iniciam em 1)
 
 // espaços para separar as colunas de impressão
 char *space[] = {"", "\t", "\t\t", "\t\t\t", "\t\t\t\t" } ;
@@ -47,16 +47,22 @@ void larga_palito (int f, int h){
 void *threadFilosofo (void *arg){
   int i = (long int) arg ;
   int count = NUM_OF_ROUNDS;
-  if(i == count){
-     while (count>=0){
+    while (count>=0){
     medita (i) ;
     pega_palito (i, i) ;
+    int is_right_free;
+    int LIVRE = 0;
+    sem_getvalue(&palito [(i+1) % NUMFILO], &is_right_free);
+    if(is_right_free == LIVRE){
+        larga_palito (i, i);
+        continue;
+    }
     pega_palito (i, (i+1) % NUMFILO) ;
+    sleep(0);
     come (i) ;
     larga_palito (i, (i+1) % NUMFILO) ;
     larga_palito (i, i) ;
     count--;
-  }
   }
   printf("Filosofo %d terminou!\n",i);
   pthread_exit (NULL) ;
@@ -88,4 +94,5 @@ int main (int argc, char *argv[]){
   // a main encerra aqui
   pthread_exit (NULL) ;
 }
+
 
